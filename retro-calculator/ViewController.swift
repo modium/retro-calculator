@@ -33,12 +33,12 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         //grab the path of the file
-        let path = NSBundle.mainBundle().pathForResource("btn", ofType: "wav")
+        let path = Bundle.main.path(forResource: "btn", ofType: "wav")
         let soundUrl = NSURL(fileURLWithPath: path!)
         
         //Swift forces you to handle exceptions, so surround this with a try catch
         do {
-            try btnSound = AVAudioPlayer(contentsOfURL: soundUrl)
+            try btnSound = AVAudioPlayer(contentsOf: soundUrl as URL)
         } catch let err as NSError {
             print(err.debugDescription)
         }
@@ -61,26 +61,26 @@ class ViewController: UIViewController {
 
     
     @IBAction func onDividePressed(sender: AnyObject) {
-        processOperation(Operation.Divide)
+        processOperation(op: Operation.Divide)
     }
     
     
     @IBAction func onMultiplyPressed(sender: AnyObject) {
-        processOperation(Operation.Multiply)
+        processOperation(op: Operation.Multiply)
     }
     
     
     @IBAction func onSubtractPressed(sender: AnyObject) {
-        processOperation(Operation.Subtract)
+        processOperation(op: Operation.Subtract)
     }
     
     
     @IBAction func onAddPressed(sender: AnyObject) {
-        processOperation(Operation.Add)
+        processOperation(op: Operation.Add)
     }
     
     @IBAction func onEqualPressed(sender: AnyObject) {
-        processOperation(currentOperation)
+        processOperation(op: currentOperation)
     }
     
     func processOperation(op: Operation) {
@@ -120,7 +120,7 @@ class ViewController: UIViewController {
     }
     
     func playSound() {
-        if btnSound.playing {
+        if btnSound.isPlaying {
             btnSound.stop()
         }
         
